@@ -1,6 +1,7 @@
 const mongoose=require('mongoose')
+require("dotenv").config()
 
-mongoose.connect('mongodb://127.0.0.1:27017/winkel').then(result=>{
+mongoose.connect(process.env.DB_URL).then(result=>{
     console.log('mongo db connected');
 }).catch(err=>{
     console.log(err);
