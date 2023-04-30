@@ -1,0 +1,81 @@
+<%- include ('../admin/layouts/header.ejs') -%>
+
+
+<div class="col pt-4">
+    <div class="pt-2 px-4 ps-lg-0 pe-xl-5">
+        <h2 class="h4 pt-2 pb-4 mb-0 text-center text-sm-start border-bottom border-primary"><span class="badge bg-faded-accent fs-sm text-body align-middle ms-2"></span></h2>
+        </div>
+    <!-- Tabs-->
+    <ul class="nav nav-tabs nav-justified" role="tablist">
+   
+         
+      <li class="nav-item"><a class="nav-link px-0" href="#AddProducts" data-bs-toggle="tab" role="tab">
+          <div class="d-none d-lg-block"><i class="ci-cloud-upload opacity-60 me-2"></i>Edit Coupon</div>
+          <div class="d-lg-none text-center"><i class="ci-bell opacity-60 d-block fs-xl mb-2"></i><span class="fs-ms">Edit Coupon</span></div></a></li>
+      
+    </ul>
+    <div class="container-fluid col">
+        <form action="/admin/editedCoupon?id=<%=coupondata._id%>" method="post">
+       
+            
+           <div class="containrer "  style="width: 40vw;">
+                <div class="form-group">
+                    <label class="form-label mt-4">Update Coupon Details</label>
+                    <div class="form-floating mb-3">
+                             <input type="text" class="form-control" name="eidtedcode" id="floatingInput" placeholder="Enter couponcode" value="<%=coupondata.code%>" required>
+                            <label for="floatingInput">Coupon Code</label>
+                    </div>
+                    <div class="form-floating mb-3">
+                            <input type="text" class="form-control" id="floatingPassword" name="editedavail"  placeholder="Available Coupons" value="<%=coupondata.available%>" required>
+                            <label for="floatingPassword">Coupon Availability</label>
+                    </div>
+                    <div class="form-floating mb-3">
+                        <input type="text" class="form-control" name="editedMinAmount" placeholder="Enter Minimum Amount" id="floatingPassword" value="<%=coupondata.minAmount%>" required>
+                        <label for="floatingPassword">Minimum Amount</label>
+                    </div>
+                   
+                    <div class="form-floating mb-3">
+                        <input type="text" class="form-control" name="editedamount" placeholder="Enter Discount Amount" id="floatingPassword" value="<%=coupondata.amount%>" required>
+                        <label for="floatingPassword">Discount Amount</label>
+                    </div>
+                    <div>
+                        <label for="exppiry-date">Expiry: <%=coupondata.expiry.toLocaleString()%></label>
+                        <input type="date" class="form-control" name="editedexpiry" id="editedexpiryDate"  placeholder="<%=coupondata.expiry.toLocaleString()%>" value="" required>
+                        <p id="thedate" hidden><%=coupondata.expiry.toLocaleString()%></p>
+                        <p id="editedexpiry"></p>
+                    </div>
+                    <div class="col-sm-6">
+                        <label class="form-label" for="dashboard-country">Status</label>
+                        <select name="editedstatus" class="form-select form-control" id="dashboard-country"  required>
+                          <option value="<%=coupondata.status%>"><%=coupondata.status%></option>
+                            <option value="Active">Active</option>
+                            <option value="disabled">Disabled</option>
+                        </select>
+                      </div>
+                </div>
+                </div>
+                 <div class="col-12">
+                     <hr class="mt-2 mb-4">
+                    
+                         <div class="d-sm-flex justify-content-end align-items-center">
+                            <button class="btn btn-primary mt-3 mt-sm-0" type="submit">Save changes</button>
+                        </div>
+                </div>
+          </div>
+        </form>
+    </div>
+
+    <script>
+        window.onload=function(){
+        const data = document.getElementById('thedate').innerText;
+        const date = new Date(data);
+        const day = date.getDate().toString().padStart(2, "0");
+        const month = (date.getMonth() + 1).toString().padStart(2, "0");
+        const year = date.getFullYear();
+        const formattedDate = `${month}/${day}/${year}`;
+        console.log(formattedDate,"updated date..");
+        document.getElementById("editedexpiryDate").value = formattedDate;
+        }   
+    </script>
+   
+   <%- include ('../admin/layouts/footer.ejs') -%>

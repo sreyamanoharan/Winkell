@@ -1,0 +1,137 @@
+<%- include ('../users/layouts/header.ejs') -%>
+
+<section class="vh-100" style="background-color: #9A616D;">
+    <div class="container py-5 h-100">
+      <div class="row d-flex justify-content-center align-items-center h-100">
+        <div class="col col-xl-10">
+          <div class="card" style="border-radius: 1rem;">
+            <div class="row g-0">
+              <div class="col-md-6 col-lg-5 d-none d-md-block">
+                <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-login-form/img1.webp"
+                  alt="login form" class="img-fluid" style="border-radius: 1rem 0 0 1rem;" />
+              </div>
+              <div class="col-md-6 col-lg-7 d-flex align-items-center">
+                <div class="card-body p-4 p-lg-5 text-black">
+  
+                  <form action="/otp" method="post">
+  
+                    <div class="d-flex align-items-center mb-3 pb-1">
+                      <i class="fas fa-cubes fa-2x me-3" style="color: #ff6219;"></i>
+                      <span class="h1 fw-bold mb-0">Login</span>
+                    </div>
+  
+                    <h5 class="fw-normal mb-3 pb-3" style="letter-spacing: 1px;"></h5>
+  
+                    <div class="form-outline mb-4">
+                      
+                      <label class="form-label" for="form2Example17">Enter OTP</label>
+                      
+                      <input type="hidden" value="<%=num%>" name="mno">
+                      <input type="number" id="form2Example17" name="otp" class="form-control form-control-lg" />
+                      
+                    </div>
+                      
+                    <form action="/otpResend">
+                    <div id="timer">00:00</div>
+                    <input type="hidden" name="mno" value="<%=num%>">
+                    <button id="resend-otp" type="submit" style="display:none;">Resend OTP</button>
+
+                  </form>
+                    <!-- <div class="form-outline mb-4">
+                     
+                      <label class="form-label" for="form2Example27">Password</label>
+                      <input type="password" id="form2Example27" class="form-control form-control-lg" />
+                    </div> -->
+  
+                    <%if(typeof message!='undefined'){%>
+                      <p><%=message%></p>
+                      <%} %>
+                    <div class="pt-1 mb-4">
+                      <button class="btn btn-dark btn-lg btn-block" type="submit">Login</button>
+                    </div> 
+                  </form>
+                </section>
+
+      <script>
+ 
+
+ function startTimer(duration, display) {
+  var timer = duration, minutes, seconds;
+  setInterval(function () {
+    minutes = parseInt(timer / 30, 10);
+    seconds = parseInt(timer % 60, 10);
+
+    minutes = minutes < 10 ? "0" + minutes : minutes;
+    seconds = seconds < 10 ? "0" + seconds : seconds;
+
+    display.textContent = minutes + ":" + seconds;
+
+    if (--timer < 0) {
+      timer = duration;
+      document.getElementById("resend-otp").style.display = "block";
+      document.getElementById("timer").style.display = "none";
+    }
+
+  }, 1000);
+}
+
+window.onload = function () {
+  var duration = 60 * 1; // 2 minutes in seconds
+  var display = document.querySelector('#timer');
+  startTimer(duration, display);
+};
+
+
+
+
+
+      </script>
+
+
+
+
+
+  
+                    <!-- <a class="small text-muted" href="#!"></a>
+                    <a class="small text-muted" href="#!"></a>
+                    <p class="mb-5 pb-lg-2" style="color: #393f81;">Don't have an account? <a href="#!"
+                        style="color: #393f81;">Sign up</a></p>
+                    <a href="#!" class="small text-muted">Terms of use.</a>
+                    <a href="#!" class="small text-muted">Privacy policy</a>
+                  
+  
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+
+
+
+  <%- include ('../users/layouts/footer.ejs') -%>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

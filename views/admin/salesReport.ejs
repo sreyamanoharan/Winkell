@@ -1,0 +1,83 @@
+<%- include('../admin/layouts/header.ejs') -%>
+
+<h2>Sales report</h2>
+
+<form  action="/admin/allsalesReport" method="get" >
+    <tr>
+      <td>
+        Form
+        <input type="date" id="startDate" name="startDate">
+      </td> 
+      <td>
+        To
+        <input type="date" id="endDate" name="endDate">
+    
+        <button style="background-color: white;color: black;" type="submit" class="btn btn-primary">Submit</button>
+      </td>
+    </tr>
+    </form>
+
+
+
+<table>
+  <thead>
+    <tr>
+      <th>Product</th>
+      <th>User</th>
+      <th>Quantity</th>
+      <th>Total</th>
+      <th>GrandTotal</th>
+      <th>Payment method</th>
+      <th>Date</th>
+    </tr>
+  </thead>
+  <tbody>
+
+    <% salesData.forEach((items, i) => { %>
+      <tr>
+        <td><%= items.products.productId %></td>
+        <td><%= items.userId %></td>
+        <td><%= items.products.qty %></td>
+        <td><%= items.products.price %></td>
+        <td><%= items.products.productTotalprice %></td>
+        <td><%= items.paymentmethod %></td>
+        <td><%= items.deliveryDate %></td>
+      </tr>
+    <% }); %>
+  </tbody>
+  <tfoot>
+    <tr>
+      <td colspan="4">Total Sales:</td>
+      <td></td>
+    </tr>
+  </tfoot>
+</table>
+
+<style>
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+  }
+  th,
+  td {
+    text-align: left;
+    padding: 8px;
+    border: 1px solid #ddd;
+  }
+  th {
+    background-color: #f2f2f2;
+    font-weight: bold;
+  }
+  tfoot td {
+    font-weight: bold;
+  }
+  @media only screen and (max-width: 600px) {
+    th,
+    td {
+      padding: 4px;
+    }
+  }
+</style>
+
+<%- include('../admin/layouts/footer.ejs') -%>

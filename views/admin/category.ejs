@@ -1,0 +1,39 @@
+<%- include ('../admin/layouts/header.ejs') -%>
+<div  style="display:flex; align-items: center;justify-content: center;">
+    <div style="width: 50rem;height: 60rem;">
+        <div>
+        <a href="/admin/addCategory"><button class="btn btn-primary btn-block mb-4">Add New Category</button></a> 
+        </div>
+<table class="table">
+    <thead>
+      <tr>
+        <th scope="col">No.</th>
+        <th scope="col">name</th>
+        <th scope="col">Description</th>
+        <th scope="col">Status</th>
+        <th scope="col">Action1</th>
+      </tr>
+    </thead>
+    <tbody>
+    <% catData.forEach((items,i) => {%>
+        
+   
+      <tr>
+        <th scope="row"><%=i+1%></th>
+        <td scope="row"><%=items.name %></td>
+        <td scope="row"><%=items.description  %></td>
+        <td scope="'row"><%=items.status %></td>
+        
+        <td scope="row"> 
+           <a href="/admin/editCategory?id=<%=items._id %>"><button type="submit" class="btn btn-secondary btn-block mb-4">Edit</button></a> 
+           <a href="/admin/deleteCategory?id=<%=items._id %>"><button type="submit" class="btn btn-danger btn-block mb-4">Delete</button></a>
+           </td> 
+      </tr>
+   <% }); %>
+    </tbody>
+  </table>
+  </div>
+  </div>
+
+  
+  <%- include ('../admin/layouts/footer.ejs') -%>

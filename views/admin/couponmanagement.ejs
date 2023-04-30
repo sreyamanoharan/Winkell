@@ -1,0 +1,96 @@
+<%- include ('../users/layouts/header.ejs') -%>
+
+<section class="offset-2 col-lg-8 pt-lg-4 pb-4 mb-3">
+  <div class="pt-2 pt-4 d-flex flex-wrap justify-content-between align-items-center">
+    <h2 class="h4 pt-2 pb-4 mb-0 text-center text-sm-start border-bottom border-primary w-100 w-sm-auto">Coupon Management <span class="badge bg-faded-accent fs-sm text-body align-middle ms-2"></span></h2>
+    <a href="/admin/addcoupon" class="mb-3 mb-sm-0"><button type="button" class="btn btn-primary">Add Coupon</button></a>
+  </div>
+  <div class="table-responsive pt-3">
+    <table class="table pe-5 me-3" id="banner">
+      <thead>
+        <tr>  
+          <th scope="col">SI.No</th>
+          <th scope="col">Coupon Code</th>
+          <th scope="col">Available Coupons</th>
+          <th scope="col">Coupon Amount</th>
+          <th scope="col">Minimum Amount</th>
+          <th scope="col">Status</th>
+          <th scope="col">Expiry</th>
+          <th scope="col">Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% couponData.forEach((couponData, i) => { %>
+          <tr>  
+            <td><%= i + 1 %></td>
+            <td><%= couponData.code %></td>
+            <td><%= couponData.available %></td>
+            <td><%= couponData.amount %></td>
+            <td><%= couponData.minAmount %></td>
+            <td><%= couponData.status %></td>
+            <td><%= couponData.expiry.toLocaleString() %></td>
+            <td>
+              <a href="/admin/editCoupon?id=<%= couponData._id %>"><button type="button" class="btn btn-danger">Edit</button></a>
+              <!-- <button type="button" onclick="deletecoupon('<%= couponData._id %>')" class="btn btn-secondary">Delete</button> -->
+            </td>
+          </tr>
+        <% }); %>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<script>
+  function deletecoupon(couponid){
+    const swalWithBootstrapButtons = Swal.mixin({
+  customClass: {
+    confirmButton: 'btn btn-success',
+    cancelButton: 'btn btn-danger'
+  },
+  buttonsStyling: false
+})
+swalWithBootstrapButtons.fire({
+  title: 'Are you sure?',
+  text: "You won't delete this Coupon",
+  icon: 'warning',
+  showCancelButton: true,
+  confirmButtonText: 'Yes, delete it!',
+  cancelButtonText: 'No, cancel!',
+  reverseButtons: true
+}).then((result) => {
+  if (result.isConfirmed) {
+    console.log(couponid);
+   $.ajax({
+    url:'/admin/deleteCoupon',
+    data:{
+      couponid:couponid
+    },
+    method:'post',
+    success:(Response)=>{
+    }
+   }).done((data)=>{
+    if(data.success){
+      swalWithBootstrapButtons.fire(
+      'Deleted!',
+      'This coupon has been deleted.',
+      'success'
+    )
+    location.reload()
+    }
+   })
+   
+  } else if (
+    /* Read more about handling dismissals below */
+    result.dismiss === Swal.DismissReason.cancel
+  ) {
+    swalWithBootstrapButtons.fire(
+      'Cancelled',
+      '',
+      'error'
+    )
+  }
+})
+   
+  }
+</script>
+<%- include ('../admin/layouts/footer.ejs') -%>

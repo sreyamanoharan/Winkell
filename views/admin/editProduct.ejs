@@ -1,0 +1,44 @@
+<%- include ('../admin/layouts/header.ejs') -%>
+
+<div style="display: flex; justify-content: center; align-items: center;">
+    <form  name="submission" oninput="clearform()" onsubmit="return editProductVal()" action="/admin/repost?id=<%=productData._id %>" method="post" enctype="multipart/form-data" style="text-align:center">
+       <h3 class="text-center">Edit product</h3>
+                <div class="form-floating mb-3">
+                    <input type="text" class="form-control" name="name" id="floatingInput" placeholder="Category name" value="<%=productData.name %>">
+                    <label for="floatingInput">Product Name</label>
+                </div><p class="text-danger"></p>
+                <div class="form-floating">
+                    <input type="text" class="form-control" name="description" id="floatingPassword" placeholder="Desription" value="<%=productData.description %>">
+                    <label for="floatingPassword">Description</label>
+                </div><p class="text-danger"></p>
+                <div class="form-floating mb-3">
+                    <input type="text" class="form-control" name="price" id="floatingInput" placeholder="price" value="<%=productData.price %>">
+                    <label for="floatingInput">price</label>
+                </div><p class="text-danger"></p>
+                <div class="form-floating mb-3">
+                    <input type="text" class="form-control" name="stock" id="floatingInput" placeholder="stock" value="<%=productData.stock%>">
+                    <label for="floatingInput">stock</label>
+                </div><p class="text-danger"></p>
+                <div class="form-floating mb-3">
+                    <input type="text" class="form-control" name="category" id="floatingInput" placeholder="category" value="<%=productData.category%>">
+                    <label for="floatingInput">category</label>
+                </div><p class="text-danger"></p>
+                <div class="form-floating mb-3">
+            
+        
+                    <img style="width:10rem;" src="/imagess/<%=productData.image%>" alt="">
+                </div>
+    
+                <button type="submit" class="btn btn-primary btn-block mb-4">Done</button>
+    
+    </form>
+    </div>
+
+
+  
+    
+    
+    
+    
+
+<%- include ('../admin/layouts/footer.ejs') -%>

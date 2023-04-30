@@ -1,0 +1,63 @@
+<%- include ('../users/layouts/header.ejs') -%>
+<section class=" offset-2 col-lg-8 pt-lg-4 pb-4 mb-3">
+    <div class="pt-2 pt-md-4 d-flex justify-content-between align-items-center">
+      <h2 class="h4 pt-2 pb-4 mb-0 text-center text-sm-start border-bottom border-primary" style="width: 100%;">Category Offer Management <span class="badge bg-faded-accent fs-sm text-body align-middle ms-2"></span></h2>
+       <a href="#">
+        
+      </a> 
+    </div>
+    <div class="table-responsive">
+      <table class="table">
+        <thead>
+          <tr>
+            <th scope="col">SI.No</th>
+            <th scope="col">Category Name</th>
+           
+           
+            <th scope="col">Discount percentage</th>
+            <th scope="col">Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% offers.forEach((offers,index) => { %>
+          <tr>
+            <td><%= index+1 %></td>
+            <td><%= offers.name %></td>
+            <td><%=offers.discount%></td>
+           
+           
+            <td>
+            <button type="button" class="btn btn-danger" onclick="location.href='/admin/editcatOffer/<%= offers._id %>'">Edit</button>
+              <% if (offers.offerStatus==true) { %>
+                <a href="/admin/deleteProOffer?id=<%=offers._id%>"><button type="button" class="btn btn-secondary">Disable</button></a>
+              <% } else { %>
+                <a href="/admin/deleteProOffer?id=<%=offers._id%>"><button type="button" class="btn btn-primary">Enable</button></a>
+              <% } %>
+            </td>
+          </tr>
+          <% }) %>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<%- include ('../admin/layouts/footer.ejs') -%>

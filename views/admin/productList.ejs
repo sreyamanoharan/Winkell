@@ -1,0 +1,49 @@
+<%- include ('../admin/layouts/header.ejs') -%>
+
+<div  style="display:flex; align-items: center;justify-content: center;">
+	
+
+	
+	
+<div style="width: 50rem;height: 60rem;">
+	<a href="/admin/addProduct"><button class="btn btn-primary btn-block mb-4">Add Product</button></a> 
+<table class="table">
+    <thead>
+      <tr>
+        <th scope="col">No.</th>
+        <th scope="col">product name</th>
+        <th scope="col">description</th>
+        <th scope="col">price</th>
+		<th scope="col">stock</th>
+
+		<th scope="col">category</th>
+		<th scope="col">image</th>
+    <th scope="col">status</th>
+      </tr>
+    </thead>
+    <tbody>
+		<% productData.forEach((elements,i) => {%>
+			
+		
+      <tr>
+        <td scope="row"><%=i+1 %></td>
+        <td scope="row"><%=elements.name%></td>
+		<td scope="row"><%=elements.description %></td>
+		<td scope="row"><%=elements.price %></td>
+		<td scope="row"><%=elements.stock%></td>
+		<td scope="row"><%=elements.category%></td>
+		<td scope="row"><img style="width: 90px;" src="/imagess/<%=elements.image[0] %>"></td>
+    <td scope="row"><%=elements.status%></td>
+
+		<td scope="row"> 
+			<a href="/admin//editProduct?id=<%=elements._id%>"><button type="submit" class="btn btn-secondary btn-block mb-4">Edit</button></a> 
+		<a href="/admin/deleteProduct?id=<%=elements._id%>">	<button type="submit" class="btn btn-danger btn-block mb-4">Delete</button></a></td>
+      </tr>
+	
+	<%}); %>
+    </tbody>
+  </table>
+  </div>
+  </div>
+
+  <%- include ('../admin/layouts/footer.ejs') -%>

@@ -1,0 +1,53 @@
+
+<%- include ('../admin/layouts/header.ejs') -%>
+<div class="form control d-flex justify-content-center align-items-center flex-column">
+<h1>Add Product</h1>
+  <div style="width: 30rem; height: 50rem;">
+    <form action="/admin/postProduct" method="post" name="submission" oninput="clearform()" onsubmit="return editProductVal()"  enctype="multipart/form-data">
+        <div class="form-floating mb-3">
+          <input type="text" class="form-control" id="floatingInput" name="productName" placeholder="product name">
+          <label for="floatingInput">product Name</label>
+        </div>
+        <p class="text-danger"></p>
+        <div class="form-floating mb-3">
+          <input type="text" class="form-control" id="floatingPassword" name="description" placeholder="Description">
+          <label for="floatingPassword">Description</label>
+        </div>
+        <p class="text-danger"></p>
+        
+        <div class="form-floating mb-3">
+          <input type="text" class="form-control" id="floatingInput" name="price"  placeholder="price">
+          <label for="floatingInput">price</label>
+        </div>
+        <p class="text-danger"></p>
+        <div class="form-floating mb-3">
+          <input type="text" class="form-control" id="floatingInput" name="stock" placeholder="stock">
+          <label for="floatingInput">Stock</label>
+        </div>
+        <p class="text-danger"></p>
+        <!-- <label for="">Select Category</label> -->
+        <div class="form-floating">
+          
+        <select class="form-select form-select mb-3" name="category" placeholder="category" aria-label=".form-select-sm example">
+          <option >Select Category</option>
+          <%catData.forEach((element,i)=>{%>
+            
+            <option value="<%=element.name%>"><%=element.name%></option>
+          <%}); %>
+         
+        </select>
+      </div>
+          <input type="file" class="form-control" id="floatingInput" name="image" placeholder="add photo">
+          
+           <%if (typeof message !== 'undefined') {%>
+          <p><%=message %></p> 
+          <% }%>
+
+      <div class="pt-5 mb-4 ">
+        <button class="btn btn-dark btn-lg btn-block" type="submit">Add</button>
+      </div>
+    </form>
+  </div>
+</div>
+<script src="/javascript/validation.js" ></script> 
+<%- include ('../admin/layouts/footer.ejs') -%>

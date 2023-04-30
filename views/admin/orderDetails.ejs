@@ -1,0 +1,129 @@
+<%- include ('../users/layouts/header.ejs') -%>
+
+
+<main id="main" class="main">
+  <table id="myTable" class="table align-middle mb-0 bg-white mt-5 pt-5">
+    <thead class="bg-light">
+      
+   
+      
+        <th>Ordered User</th>
+        <th>Deliver Address</th>
+        <th>Product Details</th>
+         <th>Ordered Date</th>
+         <th>Total Price</th>
+         <th>Payment method</th>
+         <th>Status</th>
+         <th>Action</th>
+        
+        
+      </tr>
+    </thead>
+    <tbody>
+  
+   
+      
+   
+      
+      
+  <%orders.forEach((items,i)=>{ %>
+
+      <tr>
+   
+
+    
+
+        
+       
+        
+       <td>
+          <p class="text-muted mb-0"><%=items.deliveryAddress.name%></p>
+        </td>
+        
+         <td>
+          <p class="text-muted mb-0"><%=items.deliveryAddress.name+','+items.deliveryAddress.housename+','+items.deliveryAddress.post%></p>
+        </td>
+         <td>
+          <p class="text-muted mb-0"><%=items.deliveryDate%></p>
+        </td>
+
+        <td>
+          <p class="text-muted mb-0"><%=items.orderStatus %></p>
+        </td>
+        
+
+        <td>
+          <p class="text-muted mb-0"><%=items.grandTotal%></p>
+        </td>
+
+        <td>
+          <p class="text-muted mb-0"><%=items.paymentmethod %></p>
+        </td>
+
+        <td>
+          <p class="text-muted mb-0"><%=items.orderStatus %></p>
+        </td>
+        
+        <td>
+
+          <div class="select-wrap">
+          <div class="icon"><span class="ion-ios-arrow-down"></span></div>
+          <select name="" id="" oninput="changestatus('<%=items._id%>',this.value)" class="form-control">
+            <option value="">select</option>
+            <option value="shipped">shipped</option>
+            <option value="ready for delivery">ready for delivery</option>
+            <option value="delivered">delivered</option>
+            <option value="cancel">cancel</option>
+            
+          </select>
+        </div>
+      </div>
+    
+    </td>
+        
+        
+        
+      
+       
+      </tr>
+
+  
+   <% })%>
+    </tbody>
+   
+  </table> 
+   
+  
+      <tr>
+  <script >
+  $(document).ready( function () {
+      $('#myTable').DataTable();
+  })
+  </script> 
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+<script>
+
+function changestatus(id,value){
+console.log(id, value)
+  $.post("/admin/changestatus",{id:id,value:value},function(res){
+    if(res.status){
+      location.reload()
+    }
+  })
+}
+
+
+</script>
+
+
+  <script src="assets/js/main.js"></script>
+    <link href='https://fonts.googleapis.com/css?family=Roboto:400,100,300,700' rel='stylesheet' type='text/css'>
+  
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+  
+    <link rel="stylesheet" href="css/style.css">
+    
+  </body>
+
+
+<%- include ('../users/layouts/footer.ejs') -%>

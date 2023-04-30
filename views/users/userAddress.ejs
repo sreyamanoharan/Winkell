@@ -1,0 +1,98 @@
+<%- include('../users/layouts/header.ejs') -%>
+
+<div class="container-xl px-4 mt-4">
+    <!-- Account page navigation-->
+    
+    <nav class="nav nav-borders">
+        <a class="nav-link active ms-0" href="/profile" target="__blank">Profile</a>
+        <a class="nav-link" href="address" target="__blank">Address</a>
+        <a class="nav-link" href="order" target="__blank">Orders</a>
+        <a class="nav-link" href=" "  target="__blank">Wishlist</a>
+        <a class="nav-link" href="/home"  target="__blank">home</a>
+        <a class="nav-link" href="checkOut"  target="__blank">checkOut</a>
+    </nav>
+    <hr class="mt-0 mb-4">
+    <div class="row">
+        <div class="col-xl-4">
+            <!-- Profile picture card-->
+            <div class="card mb-4 mb-xl-0">
+                <div class="card-header">Profile Picture</div>
+                <div class="card-body text-center">
+                    <!-- Profile picture image-->
+                    <img class="img-account-profile rounded-circle mb-2" style="width: 100px;height: auto;" src="http://bootdey.com/img/Content/avatar/avatar1.png" alt="">
+                    <!-- Profile picture help block-->
+                    <div class="small font-italic text-muted mb-4"><h5><%=userDetails.name%></div></h5>
+                    <!-- Profile picture upload button-->
+               
+                </div>
+            </div>
+        </div>
+         <div class="col-xl-8">
+            <!-- Account details card-->
+            <!-- <div class="card mb-4">
+                <div class="card-header">User Profile</div>
+                <div class="card-body">
+                    <form> -->
+                        <!-- Form Group (username)-->
+                        <!-- <div class="mb-3">
+                            <label class="small mb-1" for="inputUsername">Name</label>
+                            <input class="form-control" id="inputUsername" type="text" placeholder="Enter your username" value="" required>
+                        </div> -->
+                        <!-- Form Row-->
+                        <!-- <div class="row gx-3 mb-3"> -->
+                            <!-- Form Group (first name)-->
+                            <!-- <div class="col-md-6">
+                                <label class="small mb-1" for="inputFirstName">Address</label>
+                                <input class="form-control" id="inputFirstName" type="text" placeholder="Enter your address" value="" required>
+                            </div> -->
+                            <!-- Form Group (last name)-->
+                            <!-- <div class="col-md-6">
+                                <label class="small mb-1" for="inputLastName">Email</label>
+                                <input class="form-control" id="inputLastName" type="email" placeholder="Enter your Email" value=""  required>
+                            </div> -->
+                        <!-- </div> -->
+                        <!-- Form Row        -->
+                        <!-- <div class="row gx-3 mb-3"> -->
+                            <!-- Form Group (organization name)-->
+                            <!-- <div class="col-md-6">
+                                <label class="small mb-1" for="inputOrgName">Mobile number</label>
+                                <input class="form-control" id="inputOrgName" type="text" placeholder="enter your mobile number" value="" required>
+                            </div>
+                        
+                            <button class="btn btn-dark btn-lg btn-block mt-5" type="submit">Save changes</button> --> 
+
+
+<table class="table table-striped table">
+    <thead>
+      <tr>
+        
+        <th scope="col">address</th>
+        <th scope="col">Action</th>
+       
+      </tr>
+    </thead>
+    <tbody>
+        <%userDetails.address.forEach((val,i)=>{%>
+        <tr>
+            <td class="align-middle">
+                <p class="m-0"><b><%=val.name %></b>,
+                    <%=val.house +','+val.post +','+val.pin+','+val.city+','+val.district+','+val.state %>  
+                </p>
+            </td>
+
+            <td class="align-middle">
+                
+            <a href="/deleteAddress?id=<%=val._id%>" class="btn btn-danger btn-block mb-4" >delete</a>
+            <a href="/editAddress?id=<%=val._id%>" class="btn btn-danger btn-block mb-4" >edit</a>
+                
+        </tr>
+       <%})%>
+     
+    </tbody>
+    </table>
+    
+    <div class="container-fluid mt-3">
+        <a href="/newAddress" class="btn btn-primary btn-block mb-4">Add new address</a>
+        <!-- <button type="submit" class="btn btn-primary btn-block mb-4">Add new address</button> -->
+    </div>
+ <%- include ('../users/layouts/footer.ejs') -%>

@@ -1,0 +1,66 @@
+<%- include ('../admin/layouts/header.ejs') -%>
+
+
+
+ <div style="width: 90vw;height: 90vw; ">
+    <form id="editCategoryForm" action="/admin/postEdit?id=<%=catData._id %>" method="post">
+      <h3 class="text-center">Edit category</h3>
+      <div class="form-floating mb-4">
+        <input type="text" class="form-control" name="categoryName" id="categoryNameInput" placeholder="Category name" value="<%=catData.name %>">
+        <label for="categoryNameInput">Category Name</label>
+        <span id="categoryNameError" class="text-danger"></span>
+      </div>
+      <div class="form-floating">
+        <input type="text" class="form-control" name="description" id="descriptionInput" placeholder="Description" value="<%=catData.description %>" >
+        <label for="descriptionInput">Description</label>
+        <span id="descriptionError" class="text-danger"></span>
+      </div>
+      <button type="submit" class="btn btn-primary btn-block mb-4">Done</button>
+    </form>
+  </div>
+  
+ 
+
+<script>
+
+const form = document.getElementById('editCategoryForm');
+  const categoryNameInput = document.getElementById('categoryNameInput');
+  const descriptionInput = document.getElementById('descriptionInput');
+  const categoryNameError = document.getElementById('categoryNameError');
+  const descriptionError = document.getElementById('descriptionError');
+  
+  form.addEventListener('submit', (event) => {
+    let categoryPattern = /^[a-zA-Z]{3,}$/; // regular expression to match at least 3 alphabets
+    if (!categoryPattern.test(categoryNameInput.value)) {
+      categoryNameError.textContent = 'Please enter a valid category name with at least 3 alphabets.';
+      event.preventDefault();
+    } else {
+      categoryNameError.textContent = '';
+    }
+  
+    if (!descriptionInput.checkValidity()) {
+      descriptionError.textContent = 'Please enter a valid description.';
+      event.preventDefault();
+    } else {
+      descriptionError.textContent = '';
+    }
+  });
+  
+  categoryNameInput.addEventListener('input', () => {
+    categoryNameError.textContent = '';
+  });
+  
+  descriptionInput.addEventListener('input', () => {
+    descriptionError.textContent = '';
+  });
+  
+</script>
+
+  
+
+
+
+
+
+
+<%- include ('../admin/layouts/footer.ejs') -%>

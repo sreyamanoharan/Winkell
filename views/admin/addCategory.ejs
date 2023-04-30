@@ -1,0 +1,100 @@
+<%- include ('../admin/layouts/header.ejs') -%>
+<div class="mx-auto text-center">
+<!-- <form action="/admin/addCategory" method="post" class="w-all">
+    <h3>Add new category</h3>
+            <div class="form-floating mb-3">
+                <input type="text" class="form-control" name="categoryName" id="floatingInput" placeholder="Category name">
+                <label for="floatingInput">Category Name</label>
+            </div>
+            <div class="form-floating">
+                <input type="text" class="form-control" name="description" id="floatingPassword" placeholder="Desription">
+                <label for="floatingPassword">Description</label>
+              <%if ( typeof message !== 'undefined') {%>
+                <p><%=message %></p>
+              <% } %>
+
+            </div>
+
+            <button type="submit" class="btn btn-primary btn-block mb-4 mt-4">Add</button>
+
+</form> -->
+
+<form action="/admin/addCategory" method="post" class="w-all" id="addCategoryForm">
+  <h3>Add new category</h3>
+  <div class="form-floating mb-3">
+    <input type="text" class="form-control" name="categoryName" id="categoryNameInput" placeholder="Category name">
+    <label for="categoryNameInput">Category Name</label>
+    <div class="invalid-feedback">Please enter a valid category name.</div>
+  </div>
+  <div class="form-floating">
+    <input type="text" class="form-control" name="description" id="descriptionInput" placeholder="Description">
+    <label for="descriptionInput">Description</label>
+    <div class="invalid-feedback">Please enter a valid description.</div>
+  </div>
+  <button type="submit" class="btn btn-primary btn-block mb-4 mt-4">Add</button>
+</form>
+
+<script>
+  const form = document.getElementById("addCategoryForm");
+  const categoryNameInput = document.getElementById("categoryNameInput");
+  const descriptionInput = document.getElementById("descriptionInput");
+
+  form.addEventListener("submit", function (event) {
+    if (!validateCategoryName(categoryNameInput.value)) {
+      categoryNameInput.classList.add("is-invalid");
+      event.preventDefault();
+    } else {
+      categoryNameInput.classList.remove("is-invalid");
+    }
+    if (!validateDescription(descriptionInput.value)) {
+      descriptionInput.classList.add("is-invalid");
+      event.preventDefault();
+    } else {
+      descriptionInput.classList.remove("is-invalid");
+    }
+  });
+
+  function validateCategoryName(categoryName) {
+    const regex = /^(?=.*[A-Za-z].*[A-Za-z])[A-Za-z0-9]*$/;
+    return regex.test(categoryName);
+  }
+
+  function validateDescription(description) {
+    return description.trim().length > 5;
+  }
+</script>
+
+</div>
+
+
+
+
+
+
+
+
+<%- include ('../admin/layouts/footer.ejs') -%>
+
+<style>
+.w-all{
+    position: absolute;
+    left: 50%;
+    top:50%;
+    transform: translate(-50%,-50%);
+}   
+@media screen and (max-width:786px){
+  .w-all{
+    width: 80%;
+  }
+}
+@media screen and (min-width:786px){
+  .w-all{
+    width: 50%;
+  }
+}
+@media screen and (min-width:1024px){
+  .w-all{
+    width: 30%;
+  }
+}
+</style>

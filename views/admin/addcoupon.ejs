@@ -1,0 +1,52 @@
+<%- include ('../users/layouts/header.ejs') -%>
+<div class="container">
+    <div class="row">
+      <div class="col-12 col-md-8 offset-md-2 col-lg-6 offset-lg-3">
+        <form action="/admin/submitCoupon" method="post">
+          <%if(typeof message !== "undefined"){ %>
+            <div class="alert alert-dismissible alert-danger">
+              <strong>OOOH !</strong> <%=message%>
+            </div>
+          <% } %>
+          <div class="form-group">
+            <h2><label class="form-label mt-4">Enter coupon details</label></h2>
+            <div class="form-floating mb-3">
+              <input type="text" class="form-control" name="couponcode" id="floatingInput" placeholder="Enter coupon code" required>
+              <label for="floatingInput">Coupon Code</label>
+            </div>
+            <div class="form-floating mb-3">
+              <input type="text" class="form-control" name="available" placeholder="Available Coupons" required>
+              <label for="floatingPassword">Coupon Availability</label>
+            </div>
+            <div class="form-floating mb-3">
+              <input type="text" class="form-control" name="minAmount" placeholder="Enter Minimum Amount" required>
+              <label for="floatingPassword">Minimum Amount</label>
+            </div>
+            <div class="form-floating mb-3">
+              <input type="text" class="form-control" name="amount" placeholder="Enter Discount Amount" required>
+              <label for="floatingPassword">Discount Amount</label>
+            </div>
+            <div class="form-floating mb-3">
+              <input type="date" class="form-control" name="expiryDate" placeholder="Select expiry date" required>
+              <label for="floatingPassword">Expiry Date</label>
+            </div>
+            <div class="form-floating mb-3">
+              <select name="couponstatus" class="form-select form-control" id="dashboard-country" required>
+                <option value>Select Status</option>
+                <option value="Active">Active</option>
+                <option value="disabled">Disabled</option>
+              </select>
+              <label class="form-label" for="dashboard-country">Status</label>
+            </div>
+            <hr>
+            <div class="d-flex justify-content-end">
+              <button class="btn btn-primary" type="submit">Add</button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+  
+   
+   <%- include ('../admin/layouts/footer.ejs') -%> 
