@@ -353,27 +353,8 @@ const blockUser=async(req,res)=>{
 const orderDetails=async(req,res)=>{
   try {
     
-    const orders= await Orders.aggregate([{
-        $unwind:"$products"
-    },{
-        $lookup:{
-            from:"users",
-            localField:"userId",
-            foreignField:"_id",
-            as:"userInfo"
-        }
-    },
-{
-    $lookup:{
-        from:"products",
-        localField:"products.productId",
-        foreignField:"_id",
-        as:"productInfo"
-    }
-}
-])
-    console.log(orders);
-   
+    const orders= await Orders.aggregate([{$unwind:"$products"},{$addFields:{orders:"$products"}},{ $project: {_id:1, orders:1, userId:1, deliveryAddress:1, grandTotal:1, paymentmethod:1, date:1, deliveryDate:1, orderStatus:1, "products.productId":{$convert:{input:{$toString:"$products.productId" },to:"objectId" }}}},{$lookup:{from:"products",localField:"products.productId",foreignField:"_id",as:"product_info"}}])
+
 
     res.render('admin/orderDetails',{orders})
   } catch (error) {
@@ -530,7 +511,8 @@ const getSalesreport=async(req,res)=>{
         res.render('admin/salesReport',{salesData,orderInfo})
         req.session.report=null
        }else{
-         const salesData = await Orders.aggregate([{$match:{orderStatus:"delivered"}},{$unwind:"$products"}])
+          const salesData= await Orders.aggregate([{$match:{orderStatus:"delivered"}},{$unwind:"$products"},{$addFields:{orders:"$products"}},{ $project: {_id:1, orders:1, userId:1, deliveryAddress:1, grandTotal:1, paymentmethod:1, date:1, deliveryDate:1, orderStatus:1, "products.productId":{$convert:{input:{$toString:"$products.productId" },to:"objectId" }}}},{$lookup:{from:"products",localField:"products.productId",foreignField:"_id",as:"product_info"}}])
+
          const userdata= await Orders.find({orderStatus:'delivered'}).populate('userId') 
          console.log(userdata,'wertyuiop')  
         res.render('admin/salesReport',{salesData,userdata})
@@ -542,6 +524,8 @@ const getSalesreport=async(req,res)=>{
         console.log(error);
     }
 }
+
+
 
 const salesReport=async(req,res)=>{
     try {

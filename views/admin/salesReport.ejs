@@ -35,11 +35,11 @@
 
     <% salesData.forEach((items, i) => { %>
       <tr>
-        <td><%= items.products.productId %></td>
-        <td><%= items.userId %></td>
-        <td><%= items.products.qty %></td>
-        <td><%= items.products.price %></td>
-        <td><%= items.products.productTotalprice %></td>
+        <td><%= items.product_info[0].name %></td>
+        <td><%= items.deliveryAddress.name %></td>
+        <td><%= items.orders.qty %></td>
+        <td><%= items.orders.price %></td>
+        <td><%= items.orders.productTotalprice %></td>
         <td><%= items.paymentmethod %></td>
         <td><%= items.deliveryDate %></td>
       </tr>
