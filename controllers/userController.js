@@ -602,7 +602,7 @@ const loadCart=async(req,res)=>{
                 {
                     $push: {
                         "cart.items": {
-                            productId:ObjectId(product._id) ,
+                            productId:new ObjectId(product._id) ,
                             
                             price: product.price,
                             productTotalprice:product.price
