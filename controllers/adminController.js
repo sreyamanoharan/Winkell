@@ -512,7 +512,7 @@ const getSalesreport=async(req,res)=>{
         req.session.report=null
        }else{
           const salesData= await Orders.aggregate([{$match:{orderStatus:"delivered"}},{$unwind:"$products"},{$addFields:{orders:"$products"}},{ $project: {_id:1, orders:1, userId:1, deliveryAddress:1, grandTotal:1, paymentmethod:1, date:1, deliveryDate:1, orderStatus:1, "products.productId":{$convert:{input:{$toString:"$products.productId" },to:"objectId" }}}},{$lookup:{from:"products",localField:"products.productId",foreignField:"_id",as:"product_info"}}])
-
+        
          const userdata= await Orders.find({orderStatus:'delivered'}).populate('userId') 
          console.log(userdata,'wertyuiop')  
         res.render('admin/salesReport',{salesData,userdata})
@@ -540,13 +540,17 @@ const salesReport=async(req,res)=>{
          
          const endDateObj=new Date(endDate)
        
-    const salesData = await Orders.aggregate([
-        { $match: { orderStatus: "delivered" } },
-        { $unwind: "$products" },
-        { $match: { deliveryDate: { $gte: startDateObj, $lte: endDateObj } } }
-      ]);
-      console.log(salesData)
-       res.render('admin/salesReport',{salesData})
+    // const salesData = await Orders.aggregate([
+    //     { $match: { orderStatus: "delivered" } },
+    //     { $unwind: "$products" },
+    //     { $match: { deliveryDate: { $gte: startDateObj, $lte: endDateObj } } }
+    //   ]);
+        const salesData= await Orders.aggregate([{$match:{$and:[{orderStatus:"delivered"}, { deliveryDate: { $gte: startDateObj, $lte: endDateObj }}]}},{$unwind:"$products"},{$addFields:{orders:"$products"}},{ $project: {_id:1, orders:1, userId:1, deliveryAddress:1, grandTotal:1, paymentmethod:1, date:1, deliveryDate:1, orderStatus:1, "products.productId":{$convert:{input:{$toString:"$products.productId" },to:"objectId" }}}},{$lookup:{from:"products",localField:"products.productId",foreignField:"_id",as:"product_info"}}])
+        console.log(salesData,"ooooo")
+        res.render('admin/salesReport',{salesData})
+        }else{
+            const salesData= await Orders.aggregate([{$match:{orderStatus:"delivered"}},{$unwind:"$products"},{$addFields:{orders:"$products"}},{ $project: {_id:1, orders:1, userId:1, deliveryAddress:1, grandTotal:1, paymentmethod:1, date:1, deliveryDate:1, orderStatus:1, "products.productId":{$convert:{input:{$toString:"$products.productId" },to:"objectId" }}}},{$lookup:{from:"products",localField:"products.productId",foreignField:"_id",as:"product_info"}}])
+            res.render('admin/salesReport',{salesData})
         }
     } catch (error) {
         console.log(error)
