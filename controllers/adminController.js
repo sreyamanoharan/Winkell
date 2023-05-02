@@ -559,6 +559,17 @@ const salesReport=async(req,res)=>{
 
 
 
+const adminLogout=async(req,res)=>{
+    try {
+        req.session.admin=null
+        res.render('admin/adminLogin')
+    } catch (error) {
+        console.log(error);
+    }
+}
+
+
+
 // const getOrderManagement=async(req,res)=>{
 //     try {
 //     //   const OrderData = await Orders.find({products})
@@ -620,7 +631,8 @@ module.exports={
     getDashboard,
     getSalesreport,
     salesReport,
-    chartData
+    chartData,
+    adminLogout
     
 }
 

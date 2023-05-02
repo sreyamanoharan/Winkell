@@ -95,5 +95,6 @@ adminRoute.get('/salesReport',adminController.getSalesreport)
 adminRoute.get('/allsalesReport',adminController.salesReport)
 
 adminRoute.get('/chartData',adminController.chartData)
+adminRoute.get('/adminLogout',adminController.adminLogout)
 
 module.exports=adminRoute;
