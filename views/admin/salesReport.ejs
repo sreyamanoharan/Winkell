@@ -2,7 +2,7 @@
 
 <h2>Sales report</h2>
 
-<form  action="/admin/allsalesReport" method="get" >
+<form  action="/admin/allsalesReport" method="get" id="sales-report">
     <tr>
       <td>
         Form
@@ -14,6 +14,7 @@
     
         <button style="background-color: white;color: black;" type="submit" class="btn btn-primary">Submit</button>
       </td>
+      <a class="btn btn-dark text-white ms-3 float-end" style="width: 5rem;"  role="button" onclick="ExportToExcel()">Export</a>
     </tr>
     </form>
 
@@ -52,6 +53,18 @@
     </tr>
   </tfoot> -->
 </table>
+
+<script type="text/javascript" src="https://unpkg.com/xlsx@0.15.1/dist/xlsx.full.min.js"></script>
+
+<script>
+    function ExportToExcel(type, fn, dl) {
+    var elt = document.getElementById("sales-report");
+    var wb = XLSX.utils.table_to_book(elt, { sheet: "sheet1" });
+    return dl ?
+        XLSX.write(wb, { bookType: type, bookSST: true, type: 'base64' }) :
+        XLSX.writeFile(wb, fn || ('MySheetName.' + (type || 'xlsx')));
+}
+</script>
 
 <style>
   table {
