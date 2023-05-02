@@ -698,6 +698,7 @@ const proceed=async(req,res)=>{
         
         const userId=req.session.user._id
         const grandTotal= await User.findOne({_id:userId})
+        
         gtotal=grandTotal.cart.totalPrice
         var options = {
             amount: gtotal*100,  // amount in the smallest currency unit

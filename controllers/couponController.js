@@ -120,6 +120,7 @@ const deleteCoupon = async(req,res)=>{
           obj.status=true
           obj.response="coupon Applied"
           obj.disprice=original-couponDetails.amount
+          req.session.discAmt=obj.disprice
           await Coupon.updateOne({code:req.body.coupon},{$inc:{"available":-1}})
           await User.updateOne({_id:req.session.user._id},{$set:{"cart.applied":req.body.coupon,"cart.originalPrice":original,"cart.totalPrice":obj.disprice}})
         }
