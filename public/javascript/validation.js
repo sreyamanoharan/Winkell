@@ -52,6 +52,10 @@ function addProductVal() {
         return false
 
     }
+    if(stock<1){
+        pass[3].innerHTML= "enter valid stock"
+        return false
+    }
     if (priceRegex.test(stock) == false) {
         pass[3].innerHTML = "Enter correct stock"
         return false

@@ -3,7 +3,7 @@
 <div class="form control d-flex justify-content-center align-items-center flex-column">
 <h1>Add Product</h1>
   <div style="width: 30rem; height: 50rem;">
-    <form action="/admin/postProduct" method="post" name="submission" oninput="clearform()" onsubmit="return editProductVal()"  enctype="multipart/form-data">
+    <form action="/admin/postProduct" method="post" name="submission" oninput="clearform()" onsubmit="return addProductVal()"  enctype="multipart/form-data">
         <div class="form-floating mb-3">
           <input type="text" class="form-control" id="floatingInput" name="productName" placeholder="product name">
           <label for="floatingInput">product Name</label>
@@ -37,7 +37,7 @@
          
         </select>
       </div>
-          <input type="file" class="form-control" id="floatingInput" name="image" placeholder="add photo">
+          <input type="file" class="form-control" id="floatingInput" name="image" placeholder="add photo" required>
           
            <%if (typeof message !== 'undefined') {%>
           <p><%=message %></p> 
