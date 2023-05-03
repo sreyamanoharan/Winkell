@@ -38,7 +38,7 @@ user_route.get('/login',userController.loginLoad);
 
 
 user_route.get('/',userController.loadHome)
-user_route.get('/shop',isLogin,userController.loadShop)
+user_route.get('/shop',userController.loadShop)
 user_route.get('/singleProduct/:id',productController.viewsingleProduct)
 
 
