@@ -10,11 +10,13 @@ const {ObjectId} = mongoose.Types
 const config=require('../config/config')
 const Razorpay=require('razorpay')
 const crypto=require('crypto')
+const Banner = require("../models/bannermodel")
 const instance=new Razorpay({
     key_id:"rzp_test_RjzSIGSnQY9srl",
     key_secret:	"rGZgRo8zYXLxvTbjzMXxHNH3"
 
 });
+
 
 
 
@@ -129,7 +131,11 @@ try {
 
 const loadRegister = async (req, res) => {
     try {
-        res.render('registration')
+        let login = false;
+        if(req.session.user){
+            login=true;
+        }
+        res.render('registration',{login})
 
     } catch (error) {
         console.log(error);
@@ -139,6 +145,7 @@ const loadRegister = async (req, res) => {
 const insertUser = async (req, res) => {
    
     try {
+        
         const mail=req.body.email; 
         const spassword = await securePassword(req.body.password)
         const userDatas=await User.find({email:mail})
@@ -188,7 +195,12 @@ if(userDatas.length<=0){
 const loginLoad = async (req, res) => {
 
     try {
-        res.render('login');
+        let login = false;
+        if(req.session.user){
+            login=true;
+        }
+        
+        res.render('login',{login});
     } catch (error) {
         console.log(error.message);
     }
@@ -202,6 +214,7 @@ const verifyLogin = async (req, res) => {
         const password = req.body.password
 
         const userData = await User.findOne({ email: email });
+        const banner = await Banner.find({})
 
       
         if (userData) {
@@ -236,7 +249,11 @@ const loadHome = async (req, res) => {
         if(req.session.user){
             login=true;
         }
-        res.render('home',{login});
+        const banner = await Banner.find({})
+        console.log(banner);
+
+        const products=await productSchema.find().sort({_id:-1}).limit(4)
+        res.render('home',{login,banner,products});
 
     } catch (error) {
         console.log(error.message);
@@ -246,7 +263,10 @@ const loadHome = async (req, res) => {
 const loadShop = async (req, res) => {
 
 try{
-
+    let login = false;
+    if(req.session.user){
+        login=true;
+    }
      const category=req.query.category
      let categoryData=await Category.find()
      let user=req.session.user;
@@ -260,7 +280,7 @@ try{
         products=await productSchema.find({status:true})
       }
      console.log(products)
-      res.render('shop',{products,user,categoryData})
+      res.render('shop',{products,user,categoryData,login})
 
     }
     catch(error){
@@ -284,7 +304,11 @@ try{
 
 const loginotpLoad = async (req, res) => {
     try {
-        res.render('mobile')
+        let login = false;
+        if(req.session.user){
+            login=true;
+        }
+        res.render('mobile',{login})
     } catch (error) {
         console.log(error.message);
     }
@@ -292,6 +316,10 @@ const loginotpLoad = async (req, res) => {
 
 const verifyPhone = async (req, res) => {
     try {
+        let login = false;
+        if(req.session.user){
+            login=true;
+        }
         const num = req.body.num
         const check = await User.findOne({ mobile: num })
         console.log(check, "verify phoneeeee");
@@ -308,7 +336,7 @@ const verifyPhone = async (req, res) => {
                     console.log(err);
                 })
 
-            res.render('otpLogin', { num })
+            res.render('otpLogin', { num ,login})
         } else {
             res.render('mobile', { message: "did not register this mobile number" })
         }
@@ -344,6 +372,10 @@ const verifyPhone = async (req, res) => {
 
 const verifyOtp = async (req, res) => {
     try {
+        let login = false;
+        if(req.session.user){
+            login=true;
+        }
         
         const num = req.body.mno
         console.log(num)
@@ -367,22 +399,6 @@ const verifyOtp = async (req, res) => {
     })
     } catch (error) {
         console.log(error.message);
-    }
-}
-
-const resendOtp=async(req,res)=>{
-    try {
-        client.verify.v2
-        .services(verifySid)
-         .verifications.create({to:"+91" + req.session.userData.mobile,channel:'sms'})
-         .then((verification)=>{
-            console.log(verification.status)
-            res.redirect('/otp')
-         })
-
-
-    } catch (error) {
-        console.log(error);
     }
 }
 
@@ -414,11 +430,15 @@ const forgetPasswordLoad=async(req,res)=>{
 const loadProfile=async (req,res)=>{
     
 try {
+    let login = false;
+        if(req.session.user){
+            login=true;
+        }
     const session=req.session.user._id
     console.log(session);
     if(req.session.user){
             const userData=await User.findOne({_id:session})
-        res.render('userProfile',{userData})
+        res.render('userProfile',{userData,login})
     }else{
         res.redirect("/login")
     }
@@ -508,10 +528,14 @@ const resetPassword=async(req,res)=>{
 const checkOutPage=async(req,res)=>{
                   
       try {
+        let login = false;
+        if(req.session.user){
+            login=true;
+        }
         const userId= req.session.user._id
         const user=await User.findOne({_id:userId})
         console.log(user);
-        res.render('checkOut',{user})
+        res.render('checkOut',{user,login})
 
       } catch (error) {
         console.log(error);
@@ -551,11 +575,15 @@ const checkOutPage=async(req,res)=>{
 
 const loadCart=async(req,res)=>{
     try {
+        let login = false;
+        if(req.session.user){
+            login=true;
+        }
         if(req.session.user){
             const id = req.session.user._id; 
             const cartData = await User.findOne({_id:id}).populate("cart.items.productId")
             console.log(cartData.cart.items);
-            res.render('cart',{cartData,id})
+            res.render('cart',{cartData,id,login})
         }else{
             res.redirect("/login")
         }
@@ -569,6 +597,7 @@ const loadCart=async(req,res)=>{
 
  const addTocart=async(req,res)=>{
     try {
+
         const product_Id=req.body.productId
         const id=req.session.user._id
         const productData = await productSchema({_id:product_Id})
@@ -725,9 +754,14 @@ const proceed=async(req,res)=>{
      let orderDate=new Date().toISOString()
    let delDate=new Date()
   
-    let deliveryDate=new Date(delDate.setDate(delDate.getDate()+7))
-    deliveryDate=deliveryDate.toISOString()
-    console.log(deliveryDate,"56678")
+    let deliveryDate=new Date(delDate.setDate(delDate.getDate()+7)).toLocaleDateString()
+    
+    // deliveryDate=deliveryDate.toISOString()
+    let dd=deliveryDate.toString()
+    dd=dd.split('T')
+    dd=dd[0]
+
+    console.log("566784444444444444444444444444")
     let dataSave={
         userId:req.session.user._id,
          deliveryAddress:{
@@ -744,7 +778,9 @@ const proceed=async(req,res)=>{
          paymentmethod:req.body.paymentmethod,
          date:new Date().toISOString(),
          deliveryDate:deliveryDate,
-         orderStatus:'pending'
+         orderStatus:'pending',
+         month:parseInt(new Date().getMonth()) + 1
+         
     }
     console.log(dataSave)
     
@@ -806,6 +842,10 @@ const verifyPayment=async(req,res)=>{
      let orderDate=new Date().toISOString()
    let delDate=new Date()
     let deliveryDate=new Date(delDate.setDate(delDate.getDate()+7))
+    let dd=deliveryDate.toString()
+    dd=dd.split('T')
+    dd=dd[0]
+    
     let dataSave={
         userId:id,
          deliveryAddress:req.session.delivery,
@@ -815,7 +855,9 @@ const verifyPayment=async(req,res)=>{
          paymentmethod:req.session.paymentmethod,
          date:new Date().toISOString(),
          deliveryDate:deliveryDate,
-         orderStatus:'pending'
+         orderStatus:'pending',
+         month:parseInt(new Date().getMonth()) + 1
+         
     }
 
     console.log(dataSave);
@@ -910,6 +952,10 @@ const verifyPayment=async(req,res)=>{
 
   const orders= async(req,res)=>{
     try {
+        let login = false;
+        if(req.session.user){
+            login=true;
+        }
         if(req.session.user){
             const userId = req.session.user._id;
             
@@ -920,7 +966,7 @@ const verifyPayment=async(req,res)=>{
          //    const userOrders = await Order.aggregate([{ $match: { userId: orderId } }])
          //    const returnConfirmation=await orderin.find()
          console.log(orderData)
-           res.render("orderedProducts",{orderData})  
+           res.render("orderedProducts",{orderData,login})  
         }else{
             res.redirect("/login")
         }
@@ -932,6 +978,10 @@ const verifyPayment=async(req,res)=>{
 
   const viewDetails=async (req,res)=>{
     try {
+        let login = false;
+        if(req.session.user){
+            login=true;
+        }
         if(req.session.user){
             const id=req.params.id;
             console.log(id);
@@ -939,7 +989,7 @@ const verifyPayment=async(req,res)=>{
             console.log(products);
             const orderData=await Order.find({"products.productId":id})
             console.log(orderData,"kkkkkkkk");
-            res.render('orderDetails',{orderData,products})
+            res.render('orderDetails',{orderData,products,login})
     }
         
     }
@@ -953,11 +1003,15 @@ const verifyPayment=async(req,res)=>{
 
 const getUserAddress = async(req,res)=>{
     try {
+        let login = false;
+        if(req.session.user){
+            login=true;
+        }
         if(req.session.user){
             const id=req.session.user._id;
             const userDetails = await User.findOne({_id:id})
-     console.log(userDetails);
-      res.render("userAddress",{userDetails});
+  
+      res.render("userAddress",{userDetails,login});
         }else{
             res.redirect('/login')
         }
@@ -970,8 +1024,11 @@ const getUserAddress = async(req,res)=>{
 
 const addnewAddress= async(req,res)=>{
     try {
-       
-        res.render('addnewAddress')
+        let login = false;
+        if(req.session.user){
+            login=true;
+        }
+        res.render('addnewAddress',{login})
     } catch (error) {
         console.log(error);
     }
@@ -1004,10 +1061,14 @@ const addnewAddress= async(req,res)=>{
 
 const editAddress= async (req,res)=>{
     try {
+        let login = false;
+        if(req.session.user){
+            login=true;
+        }
         const id=req.query.id;
         let addressData=await User.aggregate([{$match:{_id:new ObjectId(req.session.user._id)}},{$unwind:"$address"},{$match:{"address._id":new ObjectId(id)}}])
         addressData = addressData ? addressData[0]?.address : null
-        res.render('editAddress',{addressData})
+        res.render('editAddress',{addressData,login})
     } catch (error) {
         console.log(error);
     }
@@ -1120,7 +1181,7 @@ const userLogout=async(req,res)=>{
     try {
         req.session.user=null
 
-        res.render('login')
+        res.redirect('/login')
     } catch (error) {
         console.log(error);
     }
@@ -1152,7 +1213,7 @@ module.exports = {
     changeProQnty,
     deleteAddress,
     checkOutPage,
-    resendOtp,
+  
     forgetLoad,
     forgetVerify,
     proceed,

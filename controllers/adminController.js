@@ -512,10 +512,11 @@ const getSalesreport=async(req,res)=>{
         req.session.report=null
        }else{
           const salesData= await Orders.aggregate([{$match:{orderStatus:"delivered"}},{$unwind:"$products"},{$addFields:{orders:"$products"}},{ $project: {_id:1, orders:1, userId:1, deliveryAddress:1, grandTotal:1, paymentmethod:1, date:1, deliveryDate:1, orderStatus:1, "products.productId":{$convert:{input:{$toString:"$products.productId" },to:"objectId" }}}},{$lookup:{from:"products",localField:"products.productId",foreignField:"_id",as:"product_info"}}])
-        
-         const userdata= await Orders.find({orderStatus:'delivered'}).populate('userId') 
-         console.log(userdata,'wertyuiop')  
-        res.render('admin/salesReport',{salesData,userdata})
+          console.log("jjjjjjjyyyyyyyyyyyyyyyyyyyy",salesData[0].deliveryDate)
+          
+          const userdata= await Orders.find({orderStatus:'delivered'}).populate('userId') 
+          console.log(userdata,'wertyuiop')  
+          res.render('admin/salesReport',{salesData,userdata})
     }
            
            
@@ -536,9 +537,11 @@ const salesReport=async(req,res)=>{
  
 
         if(startDate&&endDate){
-         const startDateObj=new Date(startDate)
+         const startDateObj=new Date(startDate).toLocaleDateString()
          
-         const endDateObj=new Date(endDate)
+         const endDateObj=new Date(endDate).toLocaleDateString()
+
+         console.log(startDateObj,endDateObj)
        
     // const salesData = await Orders.aggregate([
     //     { $match: { orderStatus: "delivered" } },

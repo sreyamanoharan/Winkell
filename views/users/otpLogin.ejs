@@ -31,12 +31,7 @@
                       
                     </div>
                       
-                    <form action="/otpResend">
-                    <div id="timer">00:00</div>
-                    <input type="hidden" name="mno" value="<%=num%>">
-                    <button id="resend-otp" type="submit" style="display:none;">Resend OTP</button>
-
-                  </form>
+                   
                     <!-- <div class="form-outline mb-4">
                      
                       <label class="form-label" for="form2Example27">Password</label>
@@ -51,43 +46,6 @@
                     </div> 
                   </form>
                 </section>
-
-      <script>
- 
-
- function startTimer(duration, display) {
-  var timer = duration, minutes, seconds;
-  setInterval(function () {
-    minutes = parseInt(timer / 30, 10);
-    seconds = parseInt(timer % 60, 10);
-
-    minutes = minutes < 10 ? "0" + minutes : minutes;
-    seconds = seconds < 10 ? "0" + seconds : seconds;
-
-    display.textContent = minutes + ":" + seconds;
-
-    if (--timer < 0) {
-      timer = duration;
-      document.getElementById("resend-otp").style.display = "block";
-      document.getElementById("timer").style.display = "none";
-    }
-
-  }, 1000);
-}
-
-window.onload = function () {
-  var duration = 60 * 1; // 2 minutes in seconds
-  var display = document.querySelector('#timer');
-  startTimer(duration, display);
-};
-
-
-
-
-
-      </script>
-
-
 
 
 
@@ -113,7 +71,7 @@ window.onload = function () {
 
 
 
-  <%- include ('../users/layouts/footer.ejs') -%>
+
 
 
 

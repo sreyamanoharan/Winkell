@@ -10,18 +10,6 @@ const {ObjectId} = mongoose.Types
 const config=require('../config/config')
 
 
-const viewsingleProduct=async(req,res)=>{
-    try {
-        if(req.session.user){
-            const id=req.params.id;
-            console.log(id);
-            const products=await product.findOne({_id:id})
-        res.render('singleProduct',{products})
-        }
-    } catch (error) {
-        console.log(error);
-    }
-}
 
 const getProduct=async(req,res)=>{
     try {
@@ -137,7 +125,7 @@ const deleteProduct=async(req,res)=>{
 
 
 module.exports = { 
-    viewsingleProduct,
+  
     getProduct,
     addProduct,
     postProduct,

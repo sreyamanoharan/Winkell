@@ -39,7 +39,7 @@ user_route.get('/login',userController.loginLoad);
 
 user_route.get('/',userController.loadHome)
 user_route.get('/shop',userController.loadShop)
-user_route.get('/singleProduct/:id',productController.viewsingleProduct)
+
 
 
 user_route.get('/profile',userController.loadProfile)
@@ -84,7 +84,7 @@ user_route.get('/details/:id',userController.viewDetails)
 user_route.get('/loginwithOtp',userController.loginotpLoad)
 user_route.post('/loginwithOtp',userController.verifyPhone)
 user_route.post ('/otp',userController.verifyOtp)
-user_route.post('/otpResend',userController.resendOtp)
+
 
 
 user_route.get('/verify',userController.verifyMail)
