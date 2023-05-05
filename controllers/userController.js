@@ -216,6 +216,12 @@ const loginLoad = async (req, res) => {
 const verifyLogin = async (req, res) => {
 
     try {
+        let login = false;
+        if(req.session.user){
+            login=true;
+        }
+        
+
 
         const email = req.body.email
         const password = req.body.password
@@ -230,18 +236,18 @@ const verifyLogin = async (req, res) => {
             const passwordMatch =await bcrypt.compare(password, userData.password)
             if(passwordMatch){
                 if(userData.is_verified === 0 ){
-                    res.render('login',{message:"please verify your mail"})
+                    res.render('login',{message:"please verify your mail",login})
                 }else{
                     req.session.user = userData
                     res.redirect('/home')
                 }
             }else{
-                res.render('login',{message:"email and password is inccorect"})
+                res.render('login',{message:"email and password is inccorect",login})
             }
 
             
         } else {
-            res.render('login',{message:"email and password is inccorect"})
+            res.render('login',{message:"email and password is inccorect",login})
         }
 
     } catch (error) {
