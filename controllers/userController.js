@@ -744,6 +744,7 @@ const proceed=async(req,res)=>{
         state:addressInfo.address.state,
         post:addressInfo.address.post,
         district:addressInfo.address.district,
+        
         }
 
         var instance = new Razorpay({
@@ -786,7 +787,8 @@ const proceed=async(req,res)=>{
     let dd=deliveryDate.toString()
     dd=dd.split('T')
     dd=dd[0]
-
+let month=parseInt(new Date().getMonth()) + 1
+console.log(month)
     console.log("566784444444444444444444444444")
     let dataSave={
         userId:req.session.user._id,
@@ -805,7 +807,7 @@ const proceed=async(req,res)=>{
          date:new Date().toISOString(),
          deliveryDate:deliveryDate,
          orderStatus:'pending',
-         month:parseInt(new Date().getMonth()) + 1
+         month:month
          
     }
     console.log(dataSave)
