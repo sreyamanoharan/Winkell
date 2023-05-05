@@ -475,7 +475,7 @@ const forgetLoad=async(req,res)=>{
         if(req.session.user){
             login=true;
         }
-          res.render('forget',login)
+          res.render('forget',{login})
     } catch (error) {
         console.log(error);
     }
@@ -507,7 +507,7 @@ const forgetVerify=async(req,res)=>{
              
               if(userData.is_verified ===0){
 
-                res.render('forget',{message:'please verify your mail'})
+                res.render('forget',{message:'please verify your mail',login})
                 console.log("wronggg");
 
               }else{
