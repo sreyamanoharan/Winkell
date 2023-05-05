@@ -52,12 +52,13 @@ const disableBanner=async(req,res)=>{
     try {
         const id=req.query.id;
         console.log(id)
-        const status=await Banner.findById({_id:id})
-        if(status.bannerStatus==true){
-            const stat=await Banner.findByIdAndUpdate({_id:id},{set:{bannerStatus:false}})
+        const status=await Banner.findOne({_id:new ObjectId(id)})
+        console.log(status);
+        if(status.bannerStatus){
+            const stat=await Banner.findByIdAndUpdate({_id:new ObjectId(id)},{$set:{bannerStatus:false}})
             res.redirect('/admin/banner')
         }else{
-            const stat=await Banner.findByIdAndUpdate({_id:id},{set:{bannerStatus:true}})
+            const stat=await Banner.findByIdAndUpdate({_id:new ObjectId(id)},{$set:{bannerStatus:true}})
             res.redirect('/admin/banner') 
         }
     } catch (error) {

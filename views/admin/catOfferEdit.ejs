@@ -44,7 +44,7 @@
     <!-- Vendors CSS -->
     <link rel="stylesheet" href="../assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.css" />
 
-    <link rel="stylesheet" href="../assets/vendor/libs/apex-charts/apex-charts.css" />
+    <link rel="stylesheet" hr ef="../assets/vendor/libs/apex-charts/apex-charts.css" />
 
     <!-- Page CSS -->
 
@@ -154,32 +154,7 @@
           <!-- / Navbar -->
         
 
-<form name="editCatOffer" action="/admin/catOfferPost/<%=offers._id%>" method="post" class="category-offers-form">
-  <div>
-    <h2>Category offers</h2>
-  </div>
 
-  <div class="form-group">
-    <label for="exampleInputEmail1">Category name</label>
-    <input type="text" name="categoryName" value="<%=offers.name%>" class="form-control" id="" aria-describedby="" placeholder="" disabled>
-    <small id="emailHelp" class="form-text text-muted"></small>
-  </div>
-
-
-     
-      <input type="hidden" name="category" value="<%=offers.name%>">
-     
-   
-
-  <div class="form-group">
-    <label for="exampleInputPassword1">Discount</label>
-    <input type="number" name="discount" class="form-control" value="<%=offers.discount%>" id="exampleInputPassword1" placeholder="" >
-  </div>
-  
-  <div class="form-group mt-3">
-    <button type="submit" class="btn btn-primary">Save Changes</button>
-  </div>
-</form>
         
         
         
@@ -210,87 +185,6 @@
   </body>
 </html>
 
-<style>
-
-.dashboard-border{
-  border-radius: 20px;
-  height: auto;
-  color: #ffffff;
-  cursor: pointer;
-  transition: 0.2s;
-}
-.dashboard-border:hover{
-  scale: 0.96;
-}
-.products-block-color{
-  background-color: #007bff;
-}
-.ordered-block-color{
-  background-color: #28a745;
-}
-.cancelled-block-color{
-  background-color: #dc3545;
-}
-.pending-block-color{
-  background-color: #ffc107;
-}
-.profit-block-color{
-  background-color: #787878;
-}
-.returned-block-color{
-  background-color: #ff0000;
-}
-.history-hover{
- 
-  box-shadow: inset 0px 0px 21px -11px rgba(0,0,0,7);
-}
-.history-hover:hover{
-  box-shadow: 0px 0px 5px 0px rgba(0,0,0,9);
-}
-.excel-download , .pdf-download{
-  background-color: #aaaaaa;
-  border-radius: 10px;
-  padding: 5px;
-  padding-left: 10px;
-  padding-right: 10px;
-  border: none;
-  color: #ffffff;
-  font-weight: 600;
-}
-.excel-download:active , .pdf-download:active{
-  scale: 0.9;
-}
-
-.discount-10{
-  position: relative;
-  animation-name: discount_sale;
-  animation-duration: 3s;
-  animation-iteration-count: infinite;
-  animation-timing-function: linear;
-}
-@keyframes discount_sale{
-  0%{
-    top:0;
-  }
-  25%{
-    top:6px;
-  }
-  50%{
-    top:0;
-  }
-  75%{
-    top:-6px;
-  }
-  100%{
-    top:0;
-  }
-}
-#sales-report-filter:focus , #reviews:focus{
-  outline: 0;
-  box-shadow: none;
-}
-
-</style>
 
 
 

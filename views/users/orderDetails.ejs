@@ -15,8 +15,8 @@
                         <p class="card-text text-truncate">product name: <%=products[0].name %></p>
                         <p class="card-text text-truncate">category: <%=products[0].category %></p>
                         <p class="card-text text-truncate">price: <%=products[0].price  %></p>
-                        <p class="card-text text-truncate">order date: <%=orderData[0].date %></p>
-                        <p class="card-text text-truncate">delivery date: <%=orderData[0].deliveryDate %></p>
+                        <p class="card-text text-truncate">order date: <%=new Date(orderData[0].date).toLocaleDateString("en-IN") %></p>
+                        <p class="card-text text-truncate">delivery date: <%= new Date(orderData[0].deliveryDate).toLocaleDateString("en-IN") %></p>
                         <p class="card-text text-truncate">status: <%=orderData[0].orderStatus %></p>
                         <p class="card-text"><small class="text-muted"></small></p>
                       </div>

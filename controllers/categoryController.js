@@ -50,7 +50,6 @@ const postCategory=async(req,res)=>{
 }
 
 
-
 const editCategory=async(req,res)=>{
     try {
         const id=req.query.id;
@@ -60,7 +59,6 @@ const editCategory=async(req,res)=>{
         console.log(error);
     }
 }
-
 
 
 const deleteCategory=async(req,res)=>{

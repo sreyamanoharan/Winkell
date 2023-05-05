@@ -118,9 +118,13 @@ const sendResetPasswordMail = async(name,email,token)=>{
 
 const verifyMail=async(req,res)=>{
 try {
+    let login = false;
+        if(req.session.user){
+            login=true;
+        }
    const updateInfo= await User.updateOne({_id:req.query.id},{$set:{is_verified:1}})
     console.log(updateInfo);
-    res.render('email-verified');
+    res.render('email-verified',{login});
 
 } catch (error) {
     console.log(error);
@@ -145,7 +149,10 @@ const loadRegister = async (req, res) => {
 const insertUser = async (req, res) => {
    
     try {
-        
+        let login = false;
+        if(req.session.user){
+            login=true;
+        }
         const mail=req.body.email; 
         const spassword = await securePassword(req.body.password)
         const userDatas=await User.find({email:mail})
@@ -172,15 +179,15 @@ if(userDatas.length<=0){
         if (userData) {
 
             sendVerifyMail(req.body.name,req.body.email,userData._id)
-            res.render('registration', { message: 'your registration has been successul verify your mail' })
+            res.render('registration', { message: 'your registration has been successul verify your mail' ,login})
         }
         else {
            
-            res.render('registration', { message: 'your registration hasbeen unsuccessul' })
+            res.render('registration', { message: 'your registration hasbeen unsuccessul' ,login})
         }
     }
     else{
-        res.render('registration', { message: 'this mail is already exist' })
+        res.render('registration', { message: 'this mail is already exist' ,login})
     }
 
     } catch (error) {
@@ -338,7 +345,7 @@ const verifyPhone = async (req, res) => {
 
             res.render('otpLogin', { num ,login})
         } else {
-            res.render('mobile', { message: "did not register this mobile number" })
+            res.render('mobile', { message: "did not register this mobile number" ,login})
         }
 
 
@@ -406,14 +413,18 @@ const verifyOtp = async (req, res) => {
 const forgetPasswordLoad=async(req,res)=>{
 
     try {
+        let login = false;
+        if(req.session.user){
+            login=true;
+        }
         const token=req.query.id;
         console.log(token,"1")
         const tokenData=await User.findOne({token:token})
         console.log(tokenData,"2");
         if(tokenData){
-            res.render('forget-password',{userid:tokenData._id});
+            res.render('forget-password',{userid:tokenData._id,login});
         }else{
-            res.render('404',{message:'token is invalid'})
+            res.render('404',{message:'token is invalid',login})
         }
 
     } catch (error) {
@@ -454,7 +465,11 @@ try {
 const forgetLoad=async(req,res)=>{
 
     try {
-          res.render('forget')
+        let login = false;
+        if(req.session.user){
+            login=true;
+        }
+          res.render('forget',login)
     } catch (error) {
         console.log(error);
     }
@@ -475,6 +490,10 @@ const forgetLoad=async(req,res)=>{
 
 const forgetVerify=async(req,res)=>{
     try {
+        let login = false;
+        if(req.session.user){
+            login=true;
+        }
         const email=req.body.email
        const  userData= await User.findOne({email:email});
          
@@ -490,13 +509,13 @@ const forgetVerify=async(req,res)=>{
                 console.log(randomString,"random")
                 const updatedData=await User.updateOne({email:email},{$set:{token:randomString}})
                 sendResetPasswordMail(userData.name,userData.email,randomString);
-                res.render('forget',{message:'please check your mail to reset your password'})
+                res.render('forget',{message:'please check your mail to reset your password',login})
                 console.log("truee");
             }
 
 
         }else{
-             res.render('forget',{message:'Mail is incorrect'})
+             res.render('forget',{message:'Mail is incorrect',login})
         }
 
 
@@ -508,6 +527,7 @@ const forgetVerify=async(req,res)=>{
 
 const resetPassword=async(req,res)=>{
     try {
+        
         const password=req.body.password;
         console.log(password)
         const user_id=req.body.user_id;
