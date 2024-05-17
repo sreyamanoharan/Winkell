@@ -53,7 +53,7 @@ const sendVerifyMail=async(name,email,user_id)=>{
             from:'sreyampk@gmail.com',
             to:email,
             subject:'for verifying mail',
-            html:'<p>Hii'+ name+' ,please click here to <a href="https://winkell.store/verify?id='+user_id+'">verify</a> your mail.</p>'
+            html:'<p>Hii'+ name+' ,please click here to <a href="https://winkellec.onrender.com/verify?id='+user_id+'">verify</a> your mail.</p>'
 
         }
         transporter.sendMail(mailOptions, function(error,info){
